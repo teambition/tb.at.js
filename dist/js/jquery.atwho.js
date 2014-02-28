@@ -1,4 +1,4 @@
-/*! jquery.atwho - v0.4.7 - 2014-02-22
+/*! jquery.atwho - v0.4.7 - 2014-02-28
 * Copyright (c) 2014 chord.luo <chord.luo@gmail.com>; 
 * homepage: http://ichord.github.com/At.js 
 * Licensed MIT
@@ -511,6 +511,9 @@ View = (function() {
     this.context.mark_range();
     if (!this.visible()) {
       this.$el.show();
+      if (this.context.setting.shown) {
+        this.context.setting.shown();
+      }
     }
     if (rect = this.context.rect()) {
       return this.reposition(rect);
@@ -521,7 +524,10 @@ View = (function() {
     var callback;
     if (isNaN(time && this.visible())) {
       this.context.reset_rect();
-      return this.$el.hide();
+      this.$el.hide();
+      if (this.context.setting.hidden) {
+        return this.context.setting.hidden();
+      }
     } else {
       callback = (function(_this) {
         return function() {
