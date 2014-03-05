@@ -67,7 +67,7 @@ module.exports = (grunt) ->
           specs: 'spec/build/javascripts/*.spec.js',
           vendor: [
             'bower_components/jquery/jquery.min.js',
-            'bower_components/Caret.js/src/*.js'
+            'bower_components/tb.caret.js/src/*.js'
           ],
           helpers: [
             'bower_components/jasmine-jquery/lib/jasmine-jquery.js',
