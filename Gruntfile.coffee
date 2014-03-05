@@ -1,6 +1,6 @@
 
 module.exports = (grunt) ->
-  
+
   # Project configuration.
   grunt.initConfig
     pkg: grunt.file.readJSON 'package.json'
@@ -82,16 +82,16 @@ module.exports = (grunt) ->
           open:
             target: 'http://localhost:8000/_SpecRunner.html'
 
-    'json-replace':
+    bump:
       options:
-        space: "  ",
-        replace:
-          version: "<%= pkg.version %>"
-      'update-version':
-        files:[
-          {src: 'bower.json', dest: 'bower.json'},
-          {src: 'component.json', dest: 'component.json'}
-        ]
+        files: ['package.json', 'bower.json']
+        commit: true
+        commitMessage: 'Release v%VERSION%'
+        commitFiles: ['-a']
+        createTag: true
+        tagName: 'v%VERSION%'
+        tagMessage: 'Version %VERSION%'
+        push: false
 
     notify:
       success:
@@ -104,13 +104,12 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-jasmine'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-connect'
-  grunt.loadNpmTasks 'grunt-json-replace'
   grunt.loadNpmTasks 'grunt-notify'
+  grunt.loadNpmTasks 'grunt-bump'
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-concat'
 
   # alias
-  grunt.registerTask 'update-version', 'json-replace'
   grunt.registerTask 'compile', ['coffee', 'concat', 'copy']
 
   grunt.registerTask "server", ["compile", "jasmine:dist:build", "connect"]
