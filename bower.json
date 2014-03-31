@@ -10,7 +10,7 @@
     "spec"
   ],
   "dependencies": {
-    "tb.caret.js": "git@github.com:teambition/tb.caret.js.git"
+    "tb.caret.js": "https://github.com/teambition/tb.caret.js.git"
   },
   "devDependencies": {
     "jasmine-jquery": "~2.0.2"
