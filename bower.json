@@ -14,7 +14,7 @@
   ],
   "dependencies": {
     "jquery": ">=1.7.0",
-    "tb.caret.js": "https://github.com/teambition/tb.caret.js.git"
+    "caret.js": "https://github.com/teambition/tb.caret.js.git#master"
   },
   "devDependencies": {
     "jasmine-jquery": "~2.0.2"
