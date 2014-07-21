@@ -4,6 +4,9 @@ KEY_CODE =
   ESC: 27
   TAB: 9
   ENTER: 13
+  CTRL: 17
+  P: 80
+  N: 78
 
 # Functions set for handling and rendering the data.
 # Others developers can override these methods to tweak At.js such as matcher.
@@ -55,7 +58,7 @@ DEFAULT_CALLBACKS =
     # !!null #=> false; !!undefined #=> false; !!'' #=> false;
     _results = []
     for item in data
-      _results.push item if ~item[search_key].toLowerCase().indexOf query
+      _results.push item if ~item[search_key].toLowerCase().indexOf query.toLowerCase()
     _results
 
   # If a function is given, At.js will invoke it if local filter can not find any data
@@ -81,7 +84,7 @@ DEFAULT_CALLBACKS =
 
     _results = []
     for item in items
-      item.atwho_order = item[search_key].toLowerCase().indexOf query
+      item.atwho_order = item[search_key].toLowerCase().indexOf query.toLowerCase()
       _results.push item if item.atwho_order > -1
 
     _results.sort (a,b) -> a.atwho_order - b.atwho_order
@@ -104,7 +107,7 @@ DEFAULT_CALLBACKS =
   # @return [String] highlighted string.
   highlighter: (li, query) ->
     return li if not query
-    regexp = new RegExp(">\\s*(\\w*)(" + query.replace("+","\\+") + ")(\\w*)\\s*<", 'ig')
+    regexp = new RegExp(">\\s*(\\w*?)(" + query.replace("+","\\+") + ")(\\w*)\\s*<", 'ig')
     li.replace regexp, (str, $1, $2, $3) -> '> '+$1+'<strong>' + $2 + '</strong>'+$3+' <'
 
   # What to do before inserting item's value into inputor.
@@ -113,3 +116,33 @@ DEFAULT_CALLBACKS =
   # @param $li [jQuery Object] the chosen item
   before_insert: (value, $li) ->
     value
+
+  # You can adjust the menu's offset here.
+  #
+  # @param offset [Hash] offset will be applied to menu
+  # before_reposition: (offset) ->
+  #   offset.left += 10
+  #   offset.top += 10
+  #   offset
+
+  # Use it to wrapper the content that will be inserted into text field.
+  #
+  # @param $inputor [jQuery Object] the text field such as `textarea`
+  # @param content [String] the content
+  # @param sufix [String] the `suffix` setting
+  inserting_wrapper: ($inputor, content, suffix) ->
+    # ensure str is str.
+    # BTW: Good way to change num into str: http://jsperf.com/number-to-string/2
+    new_suffix = if suffix == "" then suffix else suffix or " "
+    if $inputor.is('textarea, input')
+      '' + content + new_suffix
+    else if $inputor.attr('contentEditable') == 'true'
+      new_suffix = if suffix == "" then suffix else suffix or "&nbsp;"
+      if /firefox/i.test(navigator.userAgent)
+        wrapped_content = "<span>#{content}#{new_suffix}</span>"
+      else
+        suffix = "<span contenteditable='false'>#{new_suffix}<span>"
+        wrapped_content = "<span contenteditable='false'>#{content}#{suffix}</span>"
+      if @app.document.selection #ie 8
+        wrapped_content = "<span contenteditable='true'>#{content}</span>"
+      wrapped_content

@@ -1,3 +1,43 @@
+### v0.5.0
+
+* 593893c - refactor inserting of contenteditable
+  Adding `inserting_wrapper` for customize wrapping inserting content.
+  Not to insert item as a block in Firefox. check out issue #109.
+  Removing `getInsertedItems`, `getInsertedIDs` API. You have to collect them on your own.
+* 4d3fb8f - have to set IFRAME manually
+* 1f13a16 - change space_after to suffix
+* b099ebb - fix caret position error after inserting
+* 2c47d7a - fix #178 hide view while clicking somewhere else
+
+### v0.4.12
+
+* eeafab1 - fix error: will always call hidden atwho event
+* b0f6ceb - Highlighter finds the first occurrence
+* da256db - Adds possibility of having empty prefix (at keyword) in controllers
+* b884225 - add `space_after` option
+* 65d6273 - Passes esc/tab/return keyup events through to emitted hide event
+
+### v0.4.11
+
+* bf938db - add `delay` setting, support delay searching
+* a0b5a6f - fix bug: terminate if query out of max_len
+* 01d6d5b - add css min file
+
+### v0.4.10
+
+* update jquery dependence version
+
+### v0.4.9
+
+* f317bd7 not lowercase query, add `highlight_first` option
+
+### v0.4.8
+
+* 79bbef4  destroy atwho view container dom 
+* 0372d65  update bower and component keywords 
+* 52a41f5  add optional `before_repostion` callback 
+* cc1c239  Fixes #143 - ichord
+
 ### v0.4.7
 
 * resolved #133, #135, #137.
