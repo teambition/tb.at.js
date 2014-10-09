@@ -41,7 +41,7 @@ DEFAULT_CALLBACKS =
     # escape RegExp
     flag = flag.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
     flag = '(?:^|\\s)' + flag if should_start_with_space
-    regexp = new RegExp flag+'([A-Za-z0-9_\+\-]*)$|'+flag+'([^\\x00-\\xff]*)$','gi'
+    regexp = new RegExp flag+'([A-Za-zÀ-ÿ0-9_\+\-]*)$|'+flag+'([^\\x00-\\xff]*)$','gi'
     match = regexp.exec subtext
     if match then match[2] || match[1] else null
 
@@ -58,7 +58,7 @@ DEFAULT_CALLBACKS =
     # !!null #=> false; !!undefined #=> false; !!'' #=> false;
     _results = []
     for item in data
-      _results.push item if ~item[search_key].toLowerCase().indexOf query.toLowerCase()
+      _results.push item if ~new String(item[search_key]).toLowerCase().indexOf query.toLowerCase()
     _results
 
   # If a function is given, At.js will invoke it if local filter can not find any data
@@ -84,7 +84,7 @@ DEFAULT_CALLBACKS =
 
     _results = []
     for item in items
-      item.atwho_order = item[search_key].toLowerCase().indexOf query.toLowerCase()
+      item.atwho_order = new String(item[search_key]).toLowerCase().indexOf query.toLowerCase()
       _results.push item if item.atwho_order > -1
 
     _results.sort (a,b) -> a.atwho_order - b.atwho_order
